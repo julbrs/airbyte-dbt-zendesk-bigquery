@@ -1,0 +1,43 @@
+{{ config(schema="_airbyte_main", tags=["top-level-intermediate"]) }}
+-- SQL model to parse JSON blob stored in a single column and extract into separated field columns as described by the JSON Schema
+select
+    {{ json_extract_scalar('_airbyte_data', ['id'], ['id']) }} as id,
+    {{ json_extract_scalar('_airbyte_data', ['url'], ['url']) }} as url,
+    {{ json_extract('table_alias', '_airbyte_data', ['via']) }} as via,
+    {{ json_extract_array('_airbyte_data', ['tags'], ['tags']) }} as tags,
+    {{ json_extract_scalar('_airbyte_data', ['type'], ['type']) }} as type,
+    {{ json_extract_scalar('_airbyte_data', ['due_at'], ['due_at']) }} as due_at,
+    {{ json_extract_scalar('_airbyte_data', ['status'], ['status']) }} as status,
+    {{ json_extract_scalar('_airbyte_data', ['subject'], ['subject']) }} as subject,
+    {{ json_extract_scalar('_airbyte_data', ['brand_id'], ['brand_id']) }} as brand_id,
+    {{ json_extract_scalar('_airbyte_data', ['group_id'], ['group_id']) }} as group_id,
+    {{ json_extract_scalar('_airbyte_data', ['priority'], ['priority']) }} as priority,
+    {{ json_extract_scalar('_airbyte_data', ['is_public'], ['is_public']) }} as is_public,
+    {{ json_extract_scalar('_airbyte_data', ['recipient'], ['recipient']) }} as recipient,
+    {{ json_extract_scalar('_airbyte_data', ['created_at'], ['created_at']) }} as created_at,
+    {{ json_extract_scalar('_airbyte_data', ['problem_id'], ['problem_id']) }} as problem_id,
+    {{ json_extract_scalar('_airbyte_data', ['updated_at'], ['updated_at']) }} as updated_at,
+    {{ json_extract_scalar('_airbyte_data', ['assignee_id'], ['assignee_id']) }} as assignee_id,
+    {{ json_extract_scalar('_airbyte_data', ['description'], ['description']) }} as description,
+    {{ json_extract_scalar('_airbyte_data', ['external_id'], ['external_id']) }} as external_id,
+    {{ json_extract_scalar('_airbyte_data', ['raw_subject'], ['raw_subject']) }} as raw_subject,
+    {{ json_extract_array('_airbyte_data', ['email_cc_ids'], ['email_cc_ids']) }} as email_cc_ids,
+    {{ json_extract_array('_airbyte_data', ['follower_ids'], ['follower_ids']) }} as follower_ids,
+    {{ json_extract_array('_airbyte_data', ['followup_ids'], ['followup_ids']) }} as followup_ids,
+    {{ json_extract_scalar('_airbyte_data', ['requester_id'], ['requester_id']) }} as requester_id,
+    {{ json_extract_scalar('_airbyte_data', ['submitter_id'], ['submitter_id']) }} as submitter_id,
+    {{ json_extract_array('_airbyte_data', ['custom_fields'], ['custom_fields']) }} as custom_fields,
+    {{ json_extract_scalar('_airbyte_data', ['has_incidents'], ['has_incidents']) }} as has_incidents,
+    {{ json_extract_scalar('_airbyte_data', ['forum_topic_id'], ['forum_topic_id']) }} as forum_topic_id,
+    {{ json_extract_scalar('_airbyte_data', ['ticket_form_id'], ['ticket_form_id']) }} as ticket_form_id,
+    {{ json_extract_scalar('_airbyte_data', ['organization_id'], ['organization_id']) }} as organization_id,
+    {{ json_extract_array('_airbyte_data', ['collaborator_ids'], ['collaborator_ids']) }} as collaborator_ids,
+    {{ json_extract_scalar('_airbyte_data', ['allow_attachments'], ['allow_attachments']) }} as allow_attachments,
+    {{ json_extract_scalar('_airbyte_data', ['allow_channelback'], ['allow_channelback']) }} as allow_channelback,
+    {{ json_extract_scalar('_airbyte_data', ['generated_timestamp'], ['generated_timestamp']) }} as generated_timestamp,
+    {{ json_extract('table_alias', '_airbyte_data', ['satisfaction_rating'], ['satisfaction_rating']) }} as satisfaction_rating,
+    {{ json_extract_array('_airbyte_data', ['sharing_agreement_ids'], ['sharing_agreement_ids']) }} as sharing_agreement_ids,
+    _airbyte_emitted_at
+from {{ source('main', '_airbyte_raw_zendesk_tickets') }} as table_alias
+-- zendesk_tickets
+
