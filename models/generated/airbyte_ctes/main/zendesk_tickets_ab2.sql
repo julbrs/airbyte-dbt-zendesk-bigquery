@@ -1,6 +1,7 @@
 {{ config(schema="_airbyte_main", tags=["top-level-intermediate"]) }}
 -- SQL model to cast each column to its adequate SQL type converted from the JSON schema type
 select
+    'zendesk' as source,
     cast(id as {{ dbt_utils.type_string() }}) as id,
     cast(url as {{ dbt_utils.type_string() }}) as url,
     via,
